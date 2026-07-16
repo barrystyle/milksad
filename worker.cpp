@@ -105,7 +105,7 @@ void monitor()
     }
 }
 
-void worker(int thr_id, size_t bitlen, uint32_t& increment)
+void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset)
 {
     char buf[32];
     std::string mnemonic, seed;
@@ -119,7 +119,7 @@ void worker(int thr_id, size_t bitlen, uint32_t& increment)
     while (true) {
 
          //calculate seed from merseinne
-         get_entropy(our_increment, &buf[0]);
+         get_entropy(our_increment, offset, &buf[0]);
          entropy_to_mnemonic(&buf[0], bitlen, mnemonic);
          mnemonic_to_seed(mnemonic, seed);
 

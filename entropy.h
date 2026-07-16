@@ -5,6 +5,6 @@
 #include <cstddef>
 #include <cstdint>
 
-void get_entropy(uint32_t seed_value, char *data);
+void get_entropy(uint32_t seed_value, int offset, char *data);
 
 #endif // ENTROPY_H

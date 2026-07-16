@@ -17,6 +17,6 @@
 #include <fstream>
 
 void monitor();
-void worker(int thr_id, size_t bitlen, uint32_t& increment);
+void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset);
 
 #endif // WORKER_H

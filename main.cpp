@@ -9,6 +9,7 @@
 #include <worker.h>
 #include <fstream>
 
+int offset = 0;
 size_t bitlen = 128;
 uint32_t increment = 0;
 uint32_t maxthreads = 6;
@@ -29,7 +30,7 @@ int main()
 
     //launch threads
     for (int i=0; i<(int)maxthreads; i++) {
-         workers.push_back(std::thread(worker, i, bitlen, std::ref(increment)));
+         workers.push_back(std::thread(worker, i, bitlen, std::ref(increment), offset));
     }
 
     for (int i=0; i<(int)maxthreads+1; i++) {
