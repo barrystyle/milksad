@@ -28,28 +28,28 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
     path = "m/49'/0'/0'/0/0";
     derive_keys_p2sh_p2wpkh(seed_vec, path, result);
     if (output_debug) {
-        printf("%s p2sh   | c: %48s u: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        printf("%s p2sh   | c: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str());
     }
 
     //search db
-    if (searchaddress(result.wif_compressed_pubkey) || searchaddress(result.wif_uncompressed_pubkey)) {
+    if (searchaddress(result.wif_compressed_pubkey)) {
         char buffer[1024];
         memset(buffer, 0, sizeof(buffer));
-        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s u: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
         filelogger(std::string(buffer));
     }
 
     path = "m/84'/0'/0'/0/0";
     derive_keys_p2wpkh(seed_vec, path, result);
     if (output_debug) {
-        printf("%s p2wpkh | c: %48s u: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        printf("%s p2wpkh | c: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str());
     }
 
     //search db
-    if (searchaddress(result.wif_compressed_pubkey) || searchaddress(result.wif_uncompressed_pubkey)) {
+    if (searchaddress(result.wif_compressed_pubkey)) {
         char buffer[1024];
         memset(buffer, 0, sizeof(buffer));
-        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s u: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
         filelogger(std::string(buffer));
     }
 }
