@@ -1,0 +1,40 @@
+#include "base58.h"
+#include <bip32.h>
+#include <bip39.h>
+#include <bip39_english.h>
+#include <db.h>
+#include <derive.h>
+#include <entropy.h>
+#include <timer.h>
+#include <worker.h>
+#include <fstream>
+
+size_t bitlen = 128;
+uint32_t increment = 0;
+uint32_t maxthreads = 6;
+std::vector<uint32_t> perfcount;
+
+bool output_debug = false;
+
+int main()
+{
+    perfcount.resize(maxthreads);
+
+    //load addresses
+    initdb();
+
+    //launch monitor
+    std::vector<std::thread> workers;
+    workers.push_back(std::thread(monitor));
+
+    //launch threads
+    for (int i=0; i<(int)maxthreads; i++) {
+         workers.push_back(std::thread(worker, i, bitlen, std::ref(increment)));
+    }
+
+    for (int i=0; i<(int)maxthreads+1; i++) {
+         if (workers[i].joinable()) workers[i].join();
+    }
+
+    return 0;
+}
