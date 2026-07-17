@@ -6,6 +6,7 @@
 #include <derive.h>
 #include <entropy.h>
 #include <timer.h>
+#include <tests.h>
 #include <worker.h>
 #include <fstream>
 
@@ -16,9 +17,15 @@ uint32_t maxthreads = 6;
 std::vector<uint32_t> perfcount;
 
 bool output_debug = false;
+bool testing_debug = false;
 
 int main()
 {
+    if (testing_debug) {
+        single_thread_debug(bitlen, increment, offset);
+        return 0;
+    }
+
     perfcount.resize(maxthreads);
 
     //load addresses

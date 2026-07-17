@@ -11,6 +11,7 @@ OBJ =   \
 	entropy.o                           \
 	main.o                              \
 	worker.o                            \
+	tests.o                             \
 	simplelogger.o                      \
 	crypto/hmac_sha512.o                \
 	crypto/pkcs5_pbkdf2_hmac_sha512.o   \
