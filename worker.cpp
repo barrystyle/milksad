@@ -105,6 +105,19 @@ void monitor()
     }
 }
 
+void hexStringToBytes(const std::string& hex, char *buf) {
+    std::vector<unsigned char> bytes;
+    bytes.reserve(hex.size() / 2);
+    for (size_t i = 0; i < hex.size(); i += 2) {
+        int hi = std::isxdigit((unsigned char)hex[i])   ? std::stoi(hex.substr(i, 1), nullptr, 16) : -1;
+        int lo = std::isxdigit((unsigned char)hex[i+1]) ? std::stoi(hex.substr(i+1, 1), nullptr, 16) : -1;
+        if (hi < 0 || lo < 0)
+            throw std::invalid_argument("invalid hex character");
+        bytes.push_back((unsigned char)((hi << 4) | lo));
+    }
+    memcpy(buf, bytes.data(), bytes.size());
+}
+
 void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset)
 {
     char buf[32];
@@ -118,8 +131,8 @@ void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset)
 
     while (true) {
 
-         //calculate seed from merseinne
-         get_entropy(our_increment, offset, &buf[0]);
+         std::string illbloom = emulate_cryptojs_wordarray(our_increment);
+         hexStringToBytes(illbloom, buf);
          entropy_to_mnemonic(&buf[0], bitlen, mnemonic);
          mnemonic_to_seed(mnemonic, seed);
 

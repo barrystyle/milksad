@@ -12,8 +12,8 @@ void single_thread_debug(size_t bitlen, uint32_t& increment, int offset)
 
     while (true) {
 
-         //calculate seed from merseinne
-         get_entropy(our_increment, offset, &buf[0]);
+         std::string illbloom = emulate_cryptojs_wordarray(our_increment);
+         hexStringToBytes(illbloom, buf);
          entropy_to_mnemonic(&buf[0], bitlen, mnemonic);
          mnemonic_to_seed(mnemonic, seed);
          calculate_from_seed(seed, mnemonic, false);
