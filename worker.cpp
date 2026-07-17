@@ -134,5 +134,8 @@ void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset)
          perfcount[thr_id] += 1;
          our_increment += maxthreads;
 
+         if (our_increment % 10000 == 0) {
+             printf("*thread%d at timestamp %d\n", thr_id, our_increment);
+         }
     }
 }
