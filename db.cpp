@@ -6,15 +6,23 @@ std::unordered_set<std::string> addresses;
 
 void initdb()
 {
-    std::ifstream file("vuln_bitcoin.txt");
+    std::ifstream file0("vuln_bitcoin.txt");
+    std::ifstream file1("vuln_bitcoin.txt");
 
     Timer timer;
+
+    //count lines
+    int estlines = 0;
+    std::string temp;
+    while (std::getline(file0, temp)) {
+        ++estlines;
+    }
 
     //read into vec
     timer.start();
     std::string line;
-    addresses.reserve(52000000);
-    while (std::getline(file, line)) {
+    addresses.reserve(estlines);
+    while (std::getline(file1, line)) {
         addresses.insert(std::move(line));
     }
     int linec = addresses.size();
