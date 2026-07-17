@@ -1,6 +1,8 @@
 #include "db.h"
+#include <unordered_set>
+#include <fstream>
 
-std::vector<std::string> addresses;
+std::unordered_set<std::string> addresses;
 
 void initdb()
 {
@@ -11,8 +13,9 @@ void initdb()
     //read into vec
     timer.start();
     std::string line;
+    addresses.reserve(52000000);
     while (std::getline(file, line)) {
-        addresses.push_back(line);
+        addresses.insert(std::move(line));
     }
     int linec = addresses.size();
     timer.stop();
@@ -21,8 +24,5 @@ void initdb()
 
 bool searchaddress(std::string address)
 {
-    if (std::find(addresses.begin(), addresses.end(), address) != addresses.end()) {
-        return true;
-    }
-    return false;
+    return addresses.count(address) != 0;
 }
