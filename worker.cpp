@@ -4,7 +4,7 @@ extern bool output_debug;
 extern uint32_t maxthreads;
 extern std::vector<uint32_t> perfcount;
 
-void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_debug)
+void calculate_from_seed(std::string& seed, std::string& mnemonic, uint32_t& our_increment, bool output_debug)
 {
     pairSet result;
     
@@ -19,7 +19,7 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
     if (searchaddress(result.wif_compressed_pubkey)) {
         char buffer[1024];
         memset(buffer, 0, sizeof(buffer));
-        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
+        sprintf(buffer, "increment: %08x\nmnemonic: %s\nseed: %48s | c: %48s\n", our_increment, mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
         filelogger(std::string(buffer));
     }
 
@@ -33,7 +33,7 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
     if (searchaddress(result.wif_compressed_pubkey)) {
         char buffer[1024];
         memset(buffer, 0, sizeof(buffer));
-        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
+        sprintf(buffer, "increment: %08x\nmnemonic: %s\nseed: %48s | c: %48s\n", our_increment, mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
         filelogger(std::string(buffer));
     }
 
@@ -47,7 +47,7 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
     if (searchaddress(result.wif_compressed_pubkey)) {
         char buffer[1024];
         memset(buffer, 0, sizeof(buffer));
-        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
+        sprintf(buffer, "increment: %08x\nmnemonic: %s\nseed: %48s | c: %48s\n", our_increment, mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
         filelogger(std::string(buffer));
     }
 }
@@ -121,7 +121,7 @@ void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset)
     char buf[32];
     std::string mnemonic, seed;
 
-    printf("launching thr%d (bitlen: %d, increment: %d)\n", thr_id, bitlen, increment);
+    printf("launching thr%d (bitlen: %d, increment: %08x)\n", thr_id, bitlen, increment);
 
     //local
     perfcount[thr_id] = 0;
@@ -140,13 +140,13 @@ void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset)
          }
 
          //calculate keys from seed
-         calculate_from_seed(seed, mnemonic, output_debug);
+         calculate_from_seed(seed, mnemonic, our_increment, output_debug);
 
          perfcount[thr_id] += 1;
          our_increment += maxthreads;
 
          if (our_increment % 10000 == 0) {
-             printf("*thread%d at timestamp %d\n", thr_id, our_increment);
+             printf("*thread%d at timestamp %08x\n", thr_id, our_increment);
          }
     }
 }

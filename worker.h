@@ -17,7 +17,7 @@
 
 #include <fstream>
 
-void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_debug);
+void calculate_from_seed(std::string& seed, std::string& mnemonic, uint32_t& our_increment, bool output_debug);
 void monitor();
 void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset);
 void hexStringToBytes(const std::string& hex, char *buf);
