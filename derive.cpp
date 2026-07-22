@@ -205,14 +205,7 @@ bool derive_keys_p2pkh(std::vector<uint8_t> seed_vec, const std::string path, pa
         return false;
     }
 
-    //uncompressed p2pkh
-    if (!pubkey_from_priv(ctx, final_priv, pub_uncomp, pub_uncomp_len, false)) {
-        secp256k1_context_destroy(ctx);
-        return false;
-    }
-
     result.wif_compressed_pubkey = p2pkh_from_pub(pub_comp, pub_comp_len);
-    result.wif_uncompressed_pubkey = p2pkh_from_pub(pub_uncomp, pub_uncomp_len);
 
     secp256k1_context_destroy(ctx);
     return true;

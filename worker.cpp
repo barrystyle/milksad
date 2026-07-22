@@ -12,14 +12,14 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
     std::vector<uint8_t> seed_vec = hex_to_vec(seed);
     derive_keys_p2pkh(seed_vec, path0, result);
     if (output_debug) {
-        printf("%s p2pkh  | c: %48s u: %48s\n", path0.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        printf("%s p2pkh  | c: %48s\n", path0.c_str(), result.wif_compressed_pubkey.c_str());
     }
 
     //search db
-    if (searchaddress(result.wif_compressed_pubkey) || searchaddress(result.wif_uncompressed_pubkey)) {
+    if (searchaddress(result.wif_compressed_pubkey)) {
         char buffer[1024];
         memset(buffer, 0, sizeof(buffer));
-        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s u: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        sprintf(buffer, "mnemonic: %s\nseed: %48s | c: %48s\n", mnemonic.c_str(), seed.c_str(), result.wif_compressed_pubkey.c_str());
         filelogger(std::string(buffer));
     }
 
