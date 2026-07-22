@@ -184,7 +184,7 @@ bool derive_path(secp256k1_context* ctx, const uint8_t seed[], size_t seedlen, c
     return true;
 }
 
-bool derive_keys_p2pkh(std::vector<uint8_t> seed_vec, std::string path, pairSet& result) {
+bool derive_keys_p2pkh(std::vector<uint8_t> seed_vec, const std::string path, pairSet& result) {
 
     // create secp256k1 context
     secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
@@ -218,7 +218,7 @@ bool derive_keys_p2pkh(std::vector<uint8_t> seed_vec, std::string path, pairSet&
     return true;
 }
 
-bool derive_keys_p2sh_p2wpkh(std::vector<uint8_t> seed_vec, std::string path, pairSet& result) {
+bool derive_keys_p2sh_p2wpkh(std::vector<uint8_t> seed_vec, const std::string path, pairSet& result) {
 
     // create secp256k1 context
     secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
@@ -245,7 +245,7 @@ bool derive_keys_p2sh_p2wpkh(std::vector<uint8_t> seed_vec, std::string path, pa
     return true;
 }
 
-bool derive_keys_p2wpkh(std::vector<uint8_t> seed_vec, std::string path, pairSet& result) {
+bool derive_keys_p2wpkh(std::vector<uint8_t> seed_vec, const std::string path, pairSet& result) {
 
     // create secp256k1 context
     secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);

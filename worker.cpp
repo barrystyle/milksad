@@ -7,14 +7,12 @@ extern std::vector<uint32_t> perfcount;
 void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_debug)
 {
     pairSet result;
-    std::string path;
-
+    
+    const std::string path0 = "m/44'/0'/0'/0/0";
     std::vector<uint8_t> seed_vec = hex_to_vec(seed);
-
-    path = "m/44'/0'/0'/0/0";
-    derive_keys_p2pkh(seed_vec, path, result);
+    derive_keys_p2pkh(seed_vec, path0, result);
     if (output_debug) {
-        printf("%s p2pkh  | c: %48s u: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
+        printf("%s p2pkh  | c: %48s u: %48s\n", path0.c_str(), result.wif_compressed_pubkey.c_str(), result.wif_uncompressed_pubkey.c_str());
     }
 
     //search db
@@ -25,10 +23,10 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
         filelogger(std::string(buffer));
     }
 
-    path = "m/49'/0'/0'/0/0";
-    derive_keys_p2sh_p2wpkh(seed_vec, path, result);
+    const std::string path1 = "m/49'/0'/0'/0/0";
+    derive_keys_p2sh_p2wpkh(seed_vec, path1, result);
     if (output_debug) {
-        printf("%s p2sh   | c: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str());
+        printf("%s p2sh   | c: %48s\n", path1.c_str(), result.wif_compressed_pubkey.c_str());
     }
 
     //search db
@@ -39,10 +37,10 @@ void calculate_from_seed(std::string& seed, std::string& mnemonic, bool output_d
         filelogger(std::string(buffer));
     }
 
-    path = "m/84'/0'/0'/0/0";
-    derive_keys_p2wpkh(seed_vec, path, result);
+    const std::string path2 = "m/84'/0'/0'/0/0";
+    derive_keys_p2wpkh(seed_vec, path2, result);
     if (output_debug) {
-        printf("%s p2wpkh | c: %48s\n", path.c_str(), result.wif_compressed_pubkey.c_str());
+        printf("%s p2wpkh | c: %48s\n", path2.c_str(), result.wif_compressed_pubkey.c_str());
     }
 
     //search db
