@@ -11,7 +11,6 @@ OBJ =   \
 	entropy.o                           \
 	main.o                              \
 	worker.o                            \
-	illbloom.o                          \
 	tests.o                             \
 	simplelogger.o                      \
 	crypto/hmac_sha512.o                \

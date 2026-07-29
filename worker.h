@@ -8,7 +8,6 @@
 #include <db.h>
 #include <derive.h>
 #include <entropy.h>
-#include <illbloom.h>
 #include <simplelogger.h>
 #include <timer.h>
 
@@ -20,6 +19,5 @@
 void calculate_from_seed(std::string& seed, std::string& mnemonic, uint32_t& our_increment, bool output_debug);
 void monitor();
 void worker(int thr_id, size_t bitlen, uint32_t& increment, int offset);
-void hexStringToBytes(const std::string& hex, char *buf);
 
 #endif // WORKER_H
